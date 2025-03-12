@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  microservicios:
+    build: .
+    container_name: microservicios
+    restart: always
+    environment:
+      DATABASE_HOST: dpg-cv8o91pu0jms739d9cl0-a.oregon-postgres.render.com
+      DATABASE_NAME: db_microservicios
+      DATABASE_USER: river
+      DATABASE_PASSWORD: ig9qDzxQJcBDKb9KI5O4nICL1UNOMMO1
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    volumes:
+      - .:/app

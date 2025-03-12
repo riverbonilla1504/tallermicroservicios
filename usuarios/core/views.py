@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from .models import usuario
 import requests
 
-TAREAS_SERVICE_URL = "http://localhost:8001/api/tareas/"  # Ajusta la URL del servicio de tareas
+TAREAS_SERVICE_URL = "http://localhost:8000/api/tareas/"  # Ajusta la URL del servicio de tareas
 
 class RegistroAPIView(APIView):
     def post(self, request):
@@ -20,7 +20,7 @@ class RegistroAPIView(APIView):
         nuevo_usuario = usuario.objects.create(
             nombre=nombre,
             email=email,
-            contrasena=contrasena  
+            contrasena=make_password(contrasena)  
         )
 
         return Response({"mensaje": "Usuario registrado correctamente", "id": nuevo_usuario.id}, status=status.HTTP_201_CREATED)
@@ -39,7 +39,7 @@ class LoginAPIView(APIView):
         if not check_password(contrasena, usuario_obj.contrasena):
             return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        tareas_response = requests.get(f"{TAREAS_SERVICE_URL}{usuario_obj.id}/")
+        tareas_response = requests.get(f"{TAREAS_SERVICE_URL}{usuario_obj.id}")
         tareas = tareas_response.json() if tareas_response.status_code == 200 else []
 
         return Response({
