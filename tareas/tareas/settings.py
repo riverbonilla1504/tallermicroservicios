@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'tareas.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db_microservicios',
+        'USER': 'river',
+        'PASSWORD': 'ig9qDzxQJcBDKb9KI5O4nICL1UNOMMO1',
+        'HOST': 'dpg-cv8o91pu0jms739d9cl0-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
 }
 
