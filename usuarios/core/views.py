@@ -20,7 +20,7 @@ class RegistroAPIView(APIView):
         nuevo_usuario = usuario.objects.create(
             nombre=nombre,
             email=email,
-            contrasena=make_password(contrasena)  
+            contrasena=contrasena
         )
 
         return Response({"mensaje": "Usuario registrado correctamente", "id": nuevo_usuario.id}, status=status.HTTP_201_CREATED)
@@ -36,7 +36,7 @@ class LoginAPIView(APIView):
         except usuario.DoesNotExist:
             return Response({"error": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
-        if not check_password(contrasena, usuario_obj.contrasena):
+        if (contrasena != usuario_obj.contrasena):
             return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
 
         tareas_response = requests.get(f"{TAREAS_SERVICE_URL}{usuario_obj.id}")

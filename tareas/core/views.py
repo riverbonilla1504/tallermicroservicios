@@ -21,3 +21,15 @@ class TareasUsuarioAPIView(APIView):
         tareas = Tarea.objects.filter(id_usuario=id_usuario)
         serializer = TareaSerializer(tareas, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class TareasCompleteView(APIView):
+    def post(self, request, id_tarea):
+        tarea = Tarea.objects.get(id=id_tarea)
+        tarea.completada = True
+        tarea.save()
+        return Response(status=status.HTTP_200_OK)
+    
+class TareasDeleteView(APIView):
+    def delete(self, request, id_tarea):
+        Tarea.objects.get(id=id_tarea).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
